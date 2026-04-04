@@ -258,6 +258,13 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: pixi run get-exes
 
+      # temporary. devtools 2.x will autosync, but 1.x needs opt-in.
+      - name: Sync devtools
+        working-directory: modflow6
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: pixi run mf sync
+
       - name: Test MF6
         working-directory: modflow6
         run: |

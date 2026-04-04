@@ -357,6 +357,14 @@ jobs:
           if exist rebuilt rd /s /q rebuilt
           if exist downloaded rd /s /q downloaded
 
+      # temporary. devtools 2.x will autosync, but 1.x needs opt-in.
+      - name: Sync devtools
+        if: inputs.run_tests == true && !(runner.os == 'Windows' && matrix.extended)
+        working-directory: modflow6
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: pixi run mf sync
+
       - name: Test MF6
         if: inputs.run_tests == true && !(runner.os == 'Windows' && matrix.extended)
         working-directory: modflow6
